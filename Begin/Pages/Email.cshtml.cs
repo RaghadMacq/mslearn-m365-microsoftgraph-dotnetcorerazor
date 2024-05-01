@@ -17,10 +17,10 @@ namespace DotNetCoreRazor_MSGraph.Pages
     public class EmailModel : PageModel
     {
         private readonly GraphEmailClient _graphEmailClient;
-        
+
         [BindProperty(SupportsGet = true)]
         public string NextLink { get; set; }
-        public IEnumerable<Message> Messages  { get; private set; }
+        public IEnumerable<Message> Messages { get; private set; }
 
         public EmailModel(GraphEmailClient graphEmailClient)
         {
@@ -29,7 +29,9 @@ namespace DotNetCoreRazor_MSGraph.Pages
 
         public async Task OnGetAsync()
         {
-            // Remove this code
+            var messagesPagingData = await _graphEmailClient.GetUserMessagesPage(NextLink);
+            Messages = messagesPagingData.Messages;
+            NextLink = messagesPagingData.NextLink;
             await Task.CompletedTask;
         }
     }

@@ -16,11 +16,18 @@
                 <label>Files in your OneDrive root folder:</label> @Model.Files.Count()
                 <ul id="downloadLinks">
 
-                    @* Add foreach here *@
-
+                    @foreach(var file in Model.Files)
+                    {
+if (file.Folder == null && file.Package == null) {
+    <li>
+        <a asp-page-handler="DownloadFile"
+            asp-route-name="@file.Name"
+            asp-route-id="@file.Id">@file.Name</a>
+    </li>
+}
 
        
-                    @* Add foreach closing bracket here *@
+                    }
 
                 </ul>
             }
